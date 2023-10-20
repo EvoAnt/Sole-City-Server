@@ -9,6 +9,7 @@ var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
 var productsRouter = require("./routes/products")
 var cartsRouter = require("./routes/carts")
+var seedRouter = require("./routes/seed")
 
 
 var app = express();
@@ -33,6 +34,7 @@ app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
+app.use("/seed", seedRouter);
 
 
 mongoose
