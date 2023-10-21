@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const Cart = require("../models/Cart");
+const Product = require('../models/Product');
 
 const isAuthenticated = require("../middleware/isAuthenticated");
 
