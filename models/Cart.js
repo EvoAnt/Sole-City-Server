@@ -32,7 +32,6 @@ const cartSchema = new Schema(
             "12",
             "12.5",
             "13",
-            "13.5",
             "14",
           ],
         },

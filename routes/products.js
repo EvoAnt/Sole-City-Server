@@ -3,6 +3,8 @@ var router = express.Router();
 
 const Product = require("../models/Product");
 
+const isAuthenticated = require("../middleware/isAuthenticated");
+
 router.get("/all-products", (req, res, next) => {
   Product.find()
     .then((foundProducts) => {
@@ -16,7 +18,7 @@ router.get("/all-products", (req, res, next) => {
     });
 });
 
-router.post("/add-product", (req, res, next) => {
+router.post("/add-product", isAuthenticated, (req, res, next) => {
   const { brand, name, price, description, image } = req.body;
 
   Product.create({
@@ -38,7 +40,6 @@ router.post("/add-product", (req, res, next) => {
 });
 
 router.get("/:productId", (req, res, next) => {
-   
   Product.findById(req.params.productId)
     .then((allProducts) => {
       res.json(allProducts);
@@ -50,17 +51,27 @@ router.get("/:productId", (req, res, next) => {
 });
 
 router.get("/edit/:productId", (req, res, next) => {
-   
-    Product.findById(req.params.productId)
-      .then((allProducts) => {
-        res.json(allProducts);
-      })
-      .catch((err) => {
-        console.log(err);
-        next(err);
-      });
-  });
+  Product.findById(req.params.productId)
+    .then((allProducts) => {
+      res.json(allProducts);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
 
+router.put("/edit/:productId", (req, res, next) => {
+  const { productId } = req.params;
 
+  Product.findByIdAndUpdate(productId, req.body, { new: true })
+    .then((updatedProduct) => {
+      console.log("Updated ==>", updatedProduct);
+      res.json(updatedProduct);
+    })
+    .catch((error) => {
+      res.json(error);
+    });
+});
 
 module.exports = router;
