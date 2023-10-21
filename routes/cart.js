@@ -18,4 +18,18 @@ router.post("/create", isAuthenticated, (req, res, next) => {
     });
 });
 
+router.get('/', isAuthenticated, (req, res, next) => {
+  const owner = req.user._id;
+
+  Cart.find({owner})
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+      next(err);
+    });
+})
+
 module.exports = router;
