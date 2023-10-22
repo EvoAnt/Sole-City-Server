@@ -10,6 +10,7 @@ var authRouter = require("./routes/auth");
 var productsRouter = require("./routes/products")
 var cartRouter = require("./routes/cart")
 var seedRouter = require("./routes/seed")
+var searchRouter = require("./routes/search");
 
 
 var app = express();
@@ -35,6 +36,7 @@ app.use("/auth", authRouter);
 app.use("/products", productsRouter);
 app.use("/cart", cartRouter);
 app.use("/seed", seedRouter);
+app.use("/search", searchRouter);
 
 
 mongoose
