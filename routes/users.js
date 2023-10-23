@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
+const fileUploader = require("../config/cloudinary.config");
+
 const mongoose = require("mongoose");
 
 const User = require("../models/User");
@@ -33,7 +35,7 @@ router.get("/my-account", isAuthenticated, (req, res, next) => {
     });
 });
 
-router.get("/my-account/edit/:userId", isAuthenticated, (req, res, next) => {
+router.get("/my-account/edit", isAuthenticated, (req, res, next) => {
   const userId = req.user._id;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -47,9 +49,9 @@ router.get("/my-account/edit/:userId", isAuthenticated, (req, res, next) => {
         return res.status(404).json({ error: "User not found" });
       }
 
-      const { _id, email, name, address, image } = foundUser;
-
-      const userInfo = { _id, email, name, address, image };
+      const { _id, email, name, address, image, wishlist } = foundUser;
+      console.log(foundUser)
+      const userInfo = { _id, email, name, address, image, wishlist };
       res.json(userInfo);
     })
     .catch((err) => {
@@ -64,9 +66,10 @@ router.put("/my-account/edit/:userId", isAuthenticated, (req, res, next) => {
   const { name, address, image } = req.body;
 
   User.findByIdAndUpdate(userId, { name, address, image: image }, { new: true })
-    .then((updatedUser) => {
-      res.json(updatedUser);
-    })
+    .then(() => {
+     return  User.findById(userId).populate("wishlist")
+     
+    }).then((updatedPopulated) =>  res.json(updatedPopulated))
     .catch((error) => {
       res.json(error);
     });
@@ -91,7 +94,7 @@ router.post(
   "/my-account/wishlist/:productId",
   isAuthenticated,
   (req, res, next) => {
-    const { productId } = req.body._id;
+    const { productId } = req.params;
     const userId = req.user._id;
 
     User.findByIdAndUpdate(
@@ -109,5 +112,14 @@ router.post(
       });
   }
 );
+
+router.post("/imageUpload", fileUploader.single("image"), (req, res, next) => {
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  console.log("this is file", req.file);
+  res.json({ image: req.file.path });
+});
 
 module.exports = router;
