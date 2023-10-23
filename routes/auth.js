@@ -7,6 +7,8 @@ const User = require("../models/User");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const saltRounds = 10;
 
+const Cart = require('../models/Cart');
+
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
   const { email, password, name } = req.body;
@@ -55,18 +57,26 @@ router.post("/signup", (req, res, next) => {
           // Create a new object that doesn't expose the password
           const user = { email, name, _id };
 
-          // Send a json response containing the user object
-          res.status(201).json({ user: user });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json({ message: "Internal Server Error" });
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: "Internal Server Error" });
-    });
+          // Create an empty cart for the new user
+          Cart.create({ owner: [createdUser._id] })
+          .then(() => {
+            // Send a json response containing the user object
+            res.status(201).json({ user: user });
+          })
+          .catch((cartError) => {
+            console.log(cartError);
+            res.status(500).json({ message: "Internal Server Error" });
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: "Internal Server Error" });
+      });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  });
 });
 
 // POST  /auth/login

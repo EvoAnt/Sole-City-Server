@@ -14,6 +14,8 @@ const cartSchema = new Schema(
           default: 1,
         },
         price: Number,
+        name: String,
+        image: String,
         size: {
           type: String,
           enum: [
