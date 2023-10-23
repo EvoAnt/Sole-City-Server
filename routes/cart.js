@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const Cart = require("../models/Cart");
-const Product = require('../models/Product');
+const Product = require("../models/Product");
 
 const isAuthenticated = require("../middleware/isAuthenticated");
 
@@ -18,10 +18,12 @@ router.post("/create", isAuthenticated, (req, res, next) => {
     });
 });
 
-router.get('/', isAuthenticated, (req, res, next) => {
+
+
+router.get("/", isAuthenticated, (req, res, next) => {
   const owner = req.user._id;
 
-  Cart.find({owner})
+  Cart.find({ owner })
     .then((response) => {
       res.json(response.data);
     })
@@ -30,6 +32,6 @@ router.get('/', isAuthenticated, (req, res, next) => {
       res.json(err);
       next(err);
     });
-})
+});
 
 module.exports = router;

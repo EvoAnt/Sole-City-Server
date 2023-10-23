@@ -12,6 +12,7 @@ const userSchema = new Schema(
       default:
         "https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg",
     },
+    wishlist: [{ type: Schema.Types.ObjectId, ref: "Product" }],
   },
   {
     timestamps: true,
