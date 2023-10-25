@@ -113,6 +113,29 @@ router.post(
   }
 );
 
+router.post(
+  "/my-account/wishlist/:productId",
+  isAuthenticated,
+  (req, res, next) => {
+    const { productId } = req.params;
+    const userId = req.user._id;
+
+    User.findByIdAndUpdate(
+      userId,
+      { $pull: { wishlist: productId } },
+      { new: true }
+    )
+      .then((response) => {
+        console.log(`${productId} removed from wishlist`);
+        res.json(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+        next(err);
+      });
+  }
+);
+
 router.post("/imageUpload", fileUploader.single("image"), (req, res, next) => {
   if (!req.file) {
     next(new Error("No file uploaded!"));
