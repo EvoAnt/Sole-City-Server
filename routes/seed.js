@@ -71,9 +71,45 @@ const data = [{
     brand: 'Off-White',
     name: 'Off-White x Dunk Low University Red',
     price: 575,
-    description: 'University Red/University Red/Wolf Grey - Release Date: 12/20/19',
+    description: 'Colorway: University Red/University Red/Wolf Grey - Release Date: 12/20/19',
     image: 'https://cdn.flightclub.com/2200/TEMPLATE/153270/1.jpg'
-}]
+},
+{
+    brand: 'Air Jordan',
+    name: 'Air Jordan 6 Retro Aqua',
+    price: 165,
+    description: 'Colorway: Black/Bright Concord/Aquatone - Release Date:  10/7/23',
+    image: 'https://cdn.flightclub.com/750/TEMPLATE/356780/1.jpg'
+},
+{
+    brand: 'Adidas',
+    name: 'Yeezy Boost 700 Wave Runner',
+    price: 400,
+    description: 'Colorway: Solid Grey/Chalk White/Core Black - Release Date: 8/17/23',
+    image: 'https://cdn.flightclub.com/2200/TEMPLATE/378290/1.jpg'
+},
+{
+    brand: 'Adidas',
+    name: 'Yeezy Boost 350 V2 Zebra',
+    price: 305,
+    description: 'Colorway: White/Core Black/Red - Release Date: 4/9/22',
+    image: 'https://cdn.flightclub.com/2200/TEMPLATE/369153/1.jpg'
+},
+{
+    brand: 'Air Jordan',
+    name: 'J. Balvin x Air Jordan 3 Retro Medellin Sunset',
+    price: 430,
+    description: 'Colorway: Multi-Color/Multi-Color - Release Date:  9/23/23',
+    image: 'https://cdn.flightclub.com/2200/TEMPLATE/370415/1.jpg'
+},
+{
+    brand: 'Nike',
+    name: 'Supreme x Air Force 1 Low Box-Logo Black',
+    price: 200,
+    description: 'Colorway: Black/Black - Release Date: 3/5/20',
+    image: 'https://cdn.flightclub.com/2200/TEMPLATE/167870/1.jpg'
+},
+]
 
 router.get("/one-time", async (req, res, next) => {
     Product.insertMany(data)

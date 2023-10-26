@@ -114,12 +114,12 @@ router.post(
 );
 
 router.post(
-  "/my-account/wishlist/:productId",
+  "/my-account/wishlist/remove/:productId",
   isAuthenticated,
   (req, res, next) => {
     const { productId } = req.params;
     const userId = req.user._id;
-
+    console.log('Product ID ==>', productId);
     User.findByIdAndUpdate(
       userId,
       { $pull: { wishlist: productId } },
