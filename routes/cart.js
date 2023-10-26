@@ -154,8 +154,8 @@ router.post("/checkout", isAuthenticated, (req, res, next) => {
     .create({
       line_items: lineItems,
       mode: "payment",
-      success_url: `${process.env.REACT_APP_URI}/success`,
-      cancel_url: `${process.env.REACT_APP_URI}/cart`,
+      success_url: 'https://solecity.netlify.app/success',
+      cancel_url: 'https://solecity.netlify.app/cart',
     })
     .then((session) => {
       res.json({ url: session.url });
