@@ -64,7 +64,7 @@ router.put("/edit/:productId", (req, res, next) => {
   });
 });
 
-router.delete("/edit/:productId", (req, res, next) => {
+router.delete("/delete/:productId", (req, res, next) => {
   const { productId } = req.params;
   
   Product.findByIdAndRemove(productId)
